@@ -7,7 +7,7 @@ async function main() {
     console.log('Deploying GANGDistribution Contract...');
 
     // Set the parameters needed to launch the GANGDistribution Contract
-    const _totalAirdropAmount = 932445;
+    const _totalAirdropAmount = 78200;
     const _totalAirdropCount = 7200;
     
     const contract = await GANGDistribution.deploy(_totalAirdropAmount, _totalAirdropCount);

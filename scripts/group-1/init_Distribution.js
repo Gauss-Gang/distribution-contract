@@ -4,7 +4,7 @@ const { ethers } = require("hardhat");
 async function main() {
 
     // Following code is to use the contract at the deployed address.
-    const deployedAddress = "0xA0Fb4b56001F7F82db6a9E00Dc914c8564E26aB4"; // Replace with the actual contract address
+    const deployedAddress = "0x56f205A7e38c1c6EB401f5F251330FE9fb87A027"; // Replace with the actual contract address
     const GANGDistribution = await ethers.getContractFactory("GANGDistribution");
     const contract = await GANGDistribution.attach(deployedAddress);
    
@@ -57,9 +57,40 @@ async function main() {
         34842
     ];
 
+
     // Update Recipients Addresses and Percentages
     await contract.updateRecipients(newRecipients, newPercentages);
     console.log("Updated Recipients: ", new Date().toLocaleString());
+
+    
+    // Send the inital GANG to the contract for distributions
+    await new Promise(resolve => setTimeout(resolve, 12000)); 
+
+    console.log("Sending initial amount for distributions: ", new Date().toLocaleString());
+    const transaction = {
+        to: contract.getAddress(),
+        value: ethers.parseEther("1592875"),
+    };
+        
+    // Send the transaction
+    const tx = await owner.sendTransaction(transaction);
+        
+    // Wait for the transaction to be mined
+    await tx.wait();
+
+    await new Promise(resolve => setTimeout(resolve, 12000)); 
+
+
+    // Transfer Ownership to new Wallet
+    const newOwner = "0xc09459DF0D717a7d0681b8fE6F7A115c21C58182";
+
+    console.log("Transfering Ownership of Contract to: ", newOwner);
+
+    await contract.transferOwnership(newOwner);
+
+    await new Promise(resolve => setTimeout(resolve, 10000)); 
+
+    console.log("Transfer Successful");
 }
 
 main()

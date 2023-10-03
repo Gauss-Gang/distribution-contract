@@ -10,7 +10,7 @@ module.exports = {
   },
   networks: {
     gaussTestnet: {
-      url: "http://10.0.0.24:8554/",
+      url: "https://rpc.giltestnet.com/",
       chainId: 1452,
       accounts: {mnemonic: mnemonic}
     },
